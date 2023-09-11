@@ -31,7 +31,7 @@ AuthRouter.post('/login', async (req, res) => {
       res.status(404).send({ message: 'User not found' });
     }
   } catch (err) {
-    console.error('Error:', err);
+    // console.error('Error:', err);
     res.status(500).send({ message: 'An error occurred' });
   }
 });
@@ -53,7 +53,7 @@ AuthRouter.post('/register', async (req, res) => {
       res.send({ message: 'Successfully registered' });
     }
   } catch (error) {
-    console.error('Error:', error);
+    // console.error('Error:', error);
     res.status(500).send({ message: 'An error occurred' });
   }
 });
@@ -94,15 +94,15 @@ AuthRouter.post('/forgot-password', async (req, res) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        // console.log(error);
       } else {
-        console.log('Email sent: ' + info.response);
+        // console.log('Email sent: ' + info.response);
       }
     });
-    console.log(resetLink);
+    // console.log(resetLink);
     res.json({ status: 'Password reset link sent successfully' });
   } catch (error) {
-    console.error('Error:', error);
+    // console.error('Error:', error);
     res.status(500).send({ message: 'An error occurred' });
   }
 });
@@ -148,7 +148,7 @@ AuthRouter.post('/reset-password', async (req, res) => {
       res.json({ message: 'Password reset successfully' });
     });
   } catch (error) {
-    console.error('Error:', error);
+    // console.error('Error:', error);
     res.status(500).json({ message: 'An error occurred' });
   }
 });

@@ -28,18 +28,18 @@ ResistanceRouter.post("/createResistance", async (req, res) => {
       );
   
       if (!dbUserData) {
-        console.log("No user found with this id!");
+        // console.log("No user found with this id!");
         return res.status(404).json({ message: "Resistance created but no user with this id!" });
       }
   
-      console.log("Resistance successfully created!");
+      // console.log("Resistance successfully created!");
   
       // Log the custom response and send it
       const responseMessage = "Resistance successfully created!";
-      console.log("Response:", responseMessage);
+      // console.log("Response:", responseMessage);
       res.status(200).json({ message: responseMessage });
     } catch (err) {
-      console.error("Error:", err); 
+      // console.error("Error:", err); 
       res.status(500).json(err);
     }
   });
@@ -87,7 +87,7 @@ ResistanceRouter.delete("/deleteResistance/:id", async (req, res) => {
     // Return a 200 status code and a success message
     res.status(200).json({ message: "Resistance successfully deleted!" });
   } catch (err) {
-    console.error(err); // Log the error for debugging
+    // console.error(err); // Log the error for debugging
     res.status(500).json({ message: "Internal server error" });
   }
 });

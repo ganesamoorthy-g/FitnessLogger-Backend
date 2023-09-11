@@ -9,7 +9,7 @@ AerobicRouter.post("/createAerobic", async (req, res) => {
     try {
       const { type, name,heartRate,caloriesBurned, date, userId } = req.body;
   
-      // Create a new resistence entry
+      // Create a new Aerobic entry
       const dbAerobicData = await Aerobicmodel.create({
         type,
         name,
@@ -19,7 +19,7 @@ AerobicRouter.post("/createAerobic", async (req, res) => {
         userId,
       });
   
-      // Update the user's Resistence array with the new Aerobic entry's ObjectId
+      // Update the user's Aerobic array with the new Aerobic entry's ObjectId
       const dbUserData = await UserModel.findOneAndUpdate(
         { _id: userId },
         { $push: { aerobic: dbAerobicData._id } },
@@ -27,18 +27,18 @@ AerobicRouter.post("/createAerobic", async (req, res) => {
       );
   
       if (!dbUserData) {
-        console.log("No user found with this id!");
+        // console.log("No user found with this id!");
         return res.status(404).json({ message: "Aerobic created but no user with this id!" });
       }
   
-      console.log("Aerobic successfully created!");
+      // console.log("Aerobic successfully created!");
   
       // Log the custom response and send it
       const responseMessage = "Aerobic successfully created!";
-      console.log("Response:", responseMessage);
+      // console.log("Response:", responseMessage);
       res.status(200).json({ message: responseMessage });
     } catch (err) {
-      console.error("Error:", err); 
+      // console.error("Error:", err); 
       res.status(500).json(err);
     }
   });
@@ -48,10 +48,10 @@ AerobicRouter.post("/createAerobic", async (req, res) => {
   AerobicRouter.get("/getAerobic/:id", async (req, res) => {
     try {
       const { id } = req.params;
-  
-      const dbAerobicData = await Aerobicmodel.find({ userId: id }); // Use userId to filter by user
-  
-      res.json(dbAerobicData || []); // Return an empty array if no cardio data found
+  // Use userId to filter by user
+      const dbAerobicData = await Aerobicmodel.find({ userId: id }); 
+  // Return an empty array if no cardio data found
+      res.json(dbAerobicData || []); 
     } catch (err) {
       res.status(500).json(err);
     }
@@ -71,7 +71,7 @@ AerobicRouter.delete("/deleteAerobic/:id", async (req, res) => {
       return res.status(404).json({ message: "No Aerobic data found with this id!" });
     }
 
-    // Find the user associated with the resistence data
+    // Find the user associated with the Aerobic data
     const user = await UserModel.findOne({ aerobic: id });
 
     if (!user) {
@@ -79,7 +79,7 @@ AerobicRouter.delete("/deleteAerobic/:id", async (req, res) => {
       return res.status(200).json({ message: "Aerobic  successfully deleted!" });
     }
 
-    // Remove the resistence ID from the user's resistence array
+    // Remove the Aerobic ID from the user's Aerobic array
     await UserModel.updateOne({ _id: user._id }, { $pull: { aerobic: id } });
 
     // Return a 200 status code and a success message
