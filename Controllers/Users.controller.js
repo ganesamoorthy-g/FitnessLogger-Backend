@@ -3,6 +3,7 @@ const UserModel = require("../Models/Users.model");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 
 // GET ALL THE USERS
 UserRouter.get("/userId", (req, res, next) => {
@@ -30,6 +31,46 @@ UserRouter.get("/userId", (req, res, next) => {
       });
     });
 });
+
+
+//get the single user
+
+
+UserRouter.get('/user/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  // Log the userId to verify that it's correctly extracted
+  console.log('userId:', userId);
+
+  // Use the userId in your Mongoose query to fetch user data
+  UserModel.findById(userId)
+    .then((user) => {
+      if (user) {
+        return res.status(200).json({
+          data: user,
+          success: true,
+          message: 'User fetched successfully!!!',
+        });
+      } else {
+        return res.status(200).json({
+          data: null,
+          success: true,
+          message: 'No User Found!!!',
+        });
+      }
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        success: false,
+        message: 'Error Fetching User Data!!!',
+        error: err,
+      });
+    });
+});
+
+
+
+
 
 UserRouter.post("/create", (req, res, next) => {
   const data = req.body;
